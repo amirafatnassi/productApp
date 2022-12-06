@@ -1,0 +1,61 @@
+<div class="d-flex justify-content-center">
+    <form [formGroup]="productForm" (ngSubmit)="onSubmitFormGroupe()">
+      <div class="form-group">
+        <label for="nomProduit">Nom de Produit</label>
+        <input
+          type="text"
+          class="form-control"
+          id="nomProduit"
+          formControlName="nomProduit"
+          placeholder="nomProduit"
+          name="nomProduit"
+          ngModel
+        />
+      </div>
+      <div class="form-group">
+        <label for="description">Description</label>
+        <input
+          type="text"
+          class="form-control"
+          id="description"
+          formControlName="description"
+          placeHolder="description"
+          name="description"
+          ngModel
+        />
+      </div>
+      <div class="form-group">
+        <label for="quantite">Quantite</label>
+        <input
+          type="number"
+          class="form-control"
+          id="quantite"
+          formControlName="quantite"
+          placeHolder="Quantite"
+          name="quantite"
+          ngModel
+          required
+        />
+      </div>
+      <div class="form-group">
+        <label for="prix">Prix</label>
+        <input
+          type="number"
+          class="form-control"
+          id="prix"
+          formControlName="prix"
+          placeHolder="Prix"
+          name="prix"
+          ngModel
+          required
+        />
+      </div>
+      <div class="d-flex justify-content-between">
+        <button type="submit" [disabled]="productForm.invalid" class="btn btn-primary">Ajouter</button>
+        <button class="btn btn-primary" type="submit" routerLink="">
+          Liste de produits
+        </button>
+      </div>
+    </form>
+  </div>
+  

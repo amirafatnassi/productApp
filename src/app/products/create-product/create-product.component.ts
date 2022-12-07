@@ -1,34 +1,42 @@
 import { Component } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ProductsService } from '../services/products.service';
 
 @Component({
   selector: 'app-create-product',
   templateUrl: './create-product.component.html',
-  styleUrls: ['./create-product.component.css']
+  styleUrls: ['./create-product.component.css'],
 })
 export class CreateProductComponent {
+  validForm = false;
+  
   constructor(private productService: ProductsService) {}
   ngOnInit() {}
 
   productForm = new FormGroup({
-    nomProduit: new FormControl(''),
-    description: new FormControl(''),
-    quantite: new FormControl(''),
-    prix: new FormControl('')
-  })
-
+    nomProduit: new FormControl('', Validators.required),
+    description: new FormControl('', Validators.required),
+    quantite: new FormControl(0, [
+      Validators.required,
+      Validators.min(0),
+      Validators.max(100),
+    ]),
+    prix: new FormControl(0, [
+      Validators.required,
+      Validators.min(0),
+      Validators.max(1000),
+    ]),
+  });
 
   onSubmitFormGroupe() {
-    console.log(this.productForm.value);
-    const nouveauProduit = {
-      id: this.productService.products.length,
-      nomProduit: this.productForm.value.nomProduit || '',
-      description: this.productForm.value.description || '',
-      quantite: this.productForm.value.quantite || 0,
-      prix: this.productForm.value.prix || 0,
-    };
-    console.log(nouveauProduit);
-    this.productService.products.push(nouveauProduit);
+    this.validForm = true;
+    if (this.productForm.invalid) {
+      return;
+    }
+    this.productService
+      .createProduct(this.productForm.value)
+      .subscribe((res: any) => {
+        console.log(res);
+      });
   }
 }

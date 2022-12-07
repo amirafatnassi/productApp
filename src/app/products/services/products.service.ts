@@ -1,16 +1,29 @@
 import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ProductsService {
+  constructor(private http: HttpClient) {}
 
-  constructor() { }
+  createProduct(data: any) {
+    return this.http.post('http://localhost:3000/products', data);
+  }
 
-  products= [
-    { "id": 1, "nomProduit": "test1", "description": "produit 11111111","quantite":5,"prix":200 },
-    { "id": 2, "nomProduit": "test2", "description": "produit 22222222","quantite":15,"prix":400 },
-    { "id": 3, "nomProduit": "test3", "description": "produit 3333333333","quantite":35,"prix":2200 },
-    { "id": 4, "nomProduit": "test4", "description": "produit 444444444","quantite":55,"prix":8800 },];
+  getProducts() {
+    return this.http.get('http://localhost:3000/products');
+  }
 
+  deleteProduct(id: number) {
+    return this.http.delete(`http://localhost:3000/products/${id}`);
+  }
+
+  getProduct(id:number){
+    return this.http.get('http://localhost:3000/products/'+id);
+  }
+
+  updateProduct(id:number,data:any){
+    return this.http.put('http://localhost:3000/products/'+id,data);
+  }
 }

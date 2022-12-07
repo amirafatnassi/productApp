@@ -16,6 +16,5 @@ export class DetailProductComponent {
   productId: any;
   ngOnInit(): void {
     this.productId = this.route.snapshot.params['id'];
-    this.product = this.productService.products[this.productId];
   }
 }
